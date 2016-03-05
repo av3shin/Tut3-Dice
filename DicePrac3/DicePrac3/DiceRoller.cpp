@@ -6,88 +6,103 @@ using namespace std;
 class Dice
 {
 public:
-	Dice()
-	{
-		srand(time(NULL));	//seeding of random number generator.
-    };
-	~Dice() 
-	{
-		srand(time(NULL));
-	};
-	int getNum();
-	void print();
+	Dice(void);
+	int roll();
+	void print(float);
+	void input(int);
 	float average(Dice, int);
 	float average(int[], int);
-	int loop(int[20]);
 
 
 private:
-	float sum;
-	int arr[20];
+	int num;
+	int num2;
+	int arr[5];
 };
 
 Dice::Dice()
 {
-		srand(time(NULL));
-		sum = 0;
-		arr[20];
-}
+	srand(time(NULL));	//random number generator.
+};
 
-Dice::~Dice()
-{
 
-	srand(time(NULL));
-	sum;
-}
-
-float Dice::average(Dice roll, int num)
-{
+float Dice::average(Dice obj, int num) //Gets the value of each roll from getSum and then sums + averages
+{//First use of the average function
+	float av;
+	int sum = 0;
 	for (int i = 1; i < num; i++)
 	{
-		sum = sum + roll.loop[i];
+		sum = sum + obj.roll();
 	}
-	return sum;
+	av = sum / num; //num argument from user
+	return av;
 }
 
-int Dice::getNum()
+float Dice::average(int m [], int n) //Overloaded average function
+{//Second use of average function
+	float av = 0;
+	int sum = 0;
+	for (int i = 0; i < n; i++)
+	{
+		sum = sum + m[i];
+	}
+	av = (sum / n) + (sum % n);
+	return av;
+}
+
+int Dice::roll()
 {
-		return (rand() % 6) + 1; //Random number generator in range [1-6]
+	int val = 0;
+	val = (rand() % 6) + 1; //Random number generator in range [1-6]
+	return val;
 }
 
-void Dice::print()
+void Dice::print(float n)
 {
-	int numb;
-	numb = getNum();
-	cout << numb << endl;
-
+	cout << n << endl;
 }
 
-void input(int n)
+void Dice::input(int n)
 {
 	cout << "Enter the amount of times you want to roll the die: " << endl;
 	cin >> n;
-	
 }
 
-int Dice::loop(int m [20])
-{
-	for (int i = 0; i < 19; i++)
-	{
-		cin >> m[Dice::getNum()];
-	}
-	return m[20];
-}
 
 int main()
 {
 	Dice X;
-	int num = 0;
-	int num2 = 20;
-	input(num);
-	int arr [20];
-	X.loop(&arr[20]);
-	X.average(X, num2);
-	X.print();
+	int num = 5;
+	int size_arr = 4;
+	float sum = 0;
+	float av_holder_roll = 0;
+	float av_holder_arr;
+	int arr[5];
+
+	//X.input(num);
+
+	av_holder_roll = X.average(X,num); //Calculated and returned die roll average
+	cout << "Enter the values for your array: " << endl;
+	for (int j = 0; j < (size_arr); j++)
+	{
+		cin >> arr[j];
+	}
+	
+	av_holder_arr = X.average(arr, size_arr); //Calculated and returned array average
+
+	cout << "The number of die rolls is " << num << endl;
+	cout << "The average of the rolled values is: " << endl;
+	X.print(av_holder_roll);
+
+	cout << "The values in the array are: " << endl;
+	for (int i = 0; i < 4; i++)
+	{
+		cout << arr[i] << ", ";
+	}
+	cout << "" << endl;
+
+	cout << "The average of the values in the array is: " << endl;
+	X.print(av_holder_arr);
 	return 0;
 
 }
